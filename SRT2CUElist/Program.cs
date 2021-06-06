@@ -114,8 +114,9 @@ namespace SRT2CUElist
             while (str != "")
             {
                 sb.Append(str.Replace("<b>", "").Replace("</b>", ""));
-                sb.Append("\n");
                 str = lines[next_idx++];
+                if (str != "")
+                    sb.Append("\n");
             }
 
             while (str == "")
