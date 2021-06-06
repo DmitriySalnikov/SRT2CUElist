@@ -74,8 +74,8 @@ namespace SRT2CUElist
                 else
                 {
                     var block = ReadBlock(ref lines, ref line_index);
-                    sb.Append($"\"{block.StartTime.ToString("hh:mm:ss:ff")}\",");
-                    sb.Append($"\"{block.EndTime.ToString("hh:mm:ss:ff")}\",");
+                    sb.Append($"\"{block.StartTime.ToString(@"hh\:mm\:ss\:ff")}\",");
+                    sb.Append($"\"{block.EndTime.ToString(@"hh\:mm\:ss\:ff")}\",");
                     sb.Append($"\"-\",");
                     sb.Append($"\"{block.Text.Replace("\n", "<br>")}\"");
                     sb.Append("\n");
@@ -87,20 +87,20 @@ namespace SRT2CUElist
         {
             public int Index;
             public string Text;
-            public DateTime StartTime;
-            public DateTime EndTime;
+            public TimeSpan StartTime;
+            public TimeSpan EndTime;
         }
 
         static SRTBlock ReadBlock(ref string[] lines, ref int next_idx)
         {
-            DateTime start, end;
+            TimeSpan start, end;
             int.TryParse(lines[next_idx++], out int idx);
 
             if (lines[next_idx].Contains(" --> "))
             {
                 string[] timestamps = lines[next_idx++].Split(new string[] { " --> " }, StringSplitOptions.RemoveEmptyEntries);
-                start = DateTime.ParseExact(timestamps[0], "hh:mm:ss,fff", CultureInfo.InvariantCulture);
-                end = DateTime.ParseExact(timestamps[0], "hh:mm:ss,fff", CultureInfo.InvariantCulture);
+                start = TimeSpan.ParseExact(timestamps[0], @"hh\:mm\:ss\,fff", CultureInfo.InvariantCulture);
+                end = TimeSpan.ParseExact(timestamps[1], @"hh\:mm\:ss\,fff", CultureInfo.InvariantCulture);
             }
             else
             {
